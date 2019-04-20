@@ -6,10 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.Random;
 /**
  * @author Gershon Gilman Class to create the game board
  */
@@ -21,6 +19,7 @@ public class Board extends Application {
 //		setRow(row);
 //		setColumn(column);
 //	}
+	Utilities utility = new Utilities();
 
 	public void start(Stage primaryStage) {
 		GridPane gridpane = new GridPane();
@@ -33,6 +32,7 @@ public class Board extends Application {
 			for (int j = 0; j < getRow(); j++) {
 				Button button = new Button(i + "," + j);
 				gridpane.add(button, i, j);
+				button.setBackground(new Background(new BackgroundFill(utility.tileColor(), null, null)));
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					// right now it just turns the button blue. Maybe have a field that is an array
 					// of color and have the button cycle through colors?
@@ -40,11 +40,10 @@ public class Board extends Application {
 						System.out.println("You clicked button:");
 					}
 				});
-			
-				button.setBackground(new Background(new BackgroundFill(tileColor(), null, null)));
+
 			}
 		}
-		
+
 	}
 
 	/**
