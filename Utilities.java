@@ -1,12 +1,9 @@
-import java.awt.Color;
-import java.util.Random;
+import javafx.scene.paint.Color;
 
 public class Utilities {
-	private int number;
 
 	public Color tileColor() {
-
-		switch (number) {
+		switch (setNumber()) {
 
 		case 1:
 			return Color.BLUE;
@@ -19,16 +16,22 @@ public class Utilities {
 
 		case 4:
 			return Color.RED;
-
-		default:
-			return Color.BLACK;
 		}
+		return Color.BLACK;
 
 	}
 
-	public void setNumber() {
-		Random num = new Random();
-		number = num.nextInt(5);
+	public int setNumber() {
+		return (int) (Math.random() * ((4 - 0) + 1)) + 1;
+
 	}
 
+	public static void main(String[] args) {
+		Utilities test = new Utilities();
+		test.setNumber();
+		test.setNumber();
+		test.setNumber();
+		test.setNumber();
+
+	}
 }
