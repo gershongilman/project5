@@ -6,8 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Random;
 /**
  * @author Gershon Gilman Class to create the game board
  */
@@ -22,8 +24,9 @@ public class Board extends Application {
 
 	public void start(Stage primaryStage) {
 		GridPane gridpane = new GridPane();
-		getRow();
-		getColumn();
+		Scene scene = new Scene(gridpane);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 		System.out.println(getRow());
 		System.out.println(getColumn());
 		for (int i = 0; i < getColumn(); i++) {
@@ -37,12 +40,11 @@ public class Board extends Application {
 						System.out.println("You clicked button:");
 					}
 				});
-				button.setBackground(new Background(new BackgroundFill(new colorTile(), null, null)));
+			
+				button.setBackground(new Background(new BackgroundFill(tileColor(), null, null)));
 			}
 		}
-		Scene scene = new Scene(gridpane);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		
 	}
 
 	/**
