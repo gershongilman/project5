@@ -3,6 +3,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -11,22 +13,23 @@ import javafx.stage.Stage;
  */
 public class Board extends Application {
 	private int row = 8;
-	private int column = 2;
-
-	public Board() {
-		this.row = getRow();
-		this.column = getColumn();
-	}
+	private int column = 10;
+//
+//	public Board(int row, int column) {
+//		setRow(row);
+//		setColumn(column);
+//	}
 
 	public void start(Stage primaryStage) {
 		GridPane gridpane = new GridPane();
+		getRow();
+		getColumn();
 		System.out.println(getRow());
 		System.out.println(getColumn());
 		for (int i = 0; i < getColumn(); i++) {
 			for (int j = 0; j < getRow(); j++) {
 				Button button = new Button(i + "," + j);
 				gridpane.add(button, i, j);
-
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					// right now it just turns the button blue. Maybe have a field that is an array
 					// of color and have the button cycle through colors?
@@ -34,20 +37,9 @@ public class Board extends Application {
 						System.out.println("You clicked button:");
 					}
 				});
+				button.setBackground(new Background(new BackgroundFill(new colorTile(), null, null)));
 			}
 		}
-//		Button button = new Button("Describe");
-//		gridpane.add(button, 1, 2);
-		// button.setOnAction(new ProcessClick());
-
-//		button.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			// right now it just turns the button blue. Maybe have a field that is an array
-//			// of color and have the button cycle through colors?
-//			public void handle(ActionEvent e) {
-//				System.out.println("You clicked button 1");
-//			}
-//		});
 		Scene scene = new Scene(gridpane);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -95,12 +87,12 @@ public class Board extends Application {
 	 * @param args the command line arguments, currently ignored
 	 */
 	public static void main(String[] args) {
-		Application.launch(args);
 		String inputRow = args[0];
 		String inputColumn = args[1];
 		Board board = new Board();
-		board.setRow(Integer.parseInt(inputRow));
+		board.setRow(Integer.valueOf(inputRow));
 		board.setColumn(Integer.parseInt(inputColumn));
+		Application.launch(args);
 
 	}
 
