@@ -1,49 +1,61 @@
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 /**
  * @author Gershon Gilman Class to create the game board
  */
-public class Board extends Application {
-	private int row = 8;
-	private int column = 10;
-//
-//	public Board(int row, int column) {
-//		setRow(row);
-//		setColumn(column);
-//	}
-	Utilities utility = new Utilities();
+public class Board {
+	// store the number of rows
+	private int row;
 
-	public void start(Stage primaryStage) {
+	// store the number of columns
+	private int column;
+
+	// stores the number of colors
+	private int colors;
+
+	// the array of buttons
+	//private Button[][] buttons = new Button[getColumn()][getRow()];
+
+	public Board(int row, int column, int colors) {
+		this.row = row;
+		this.column = column;
+		this.colors = colors;
+	}
+
+	/**
+	 * Setting up the board
+	 */
+	public GridPane show() {
+		// creates the utility that we will use
+		Utilities utility = new Utilities();
+
+		// creating the actual grid
 		GridPane gridpane = new GridPane();
-		Scene scene = new Scene(gridpane);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		System.out.println(getRow());
-		System.out.println(getColumn());
+
+		// filling up the board with buttons
 		for (int i = 0; i < getColumn(); i++) {
 			for (int j = 0; j < getRow(); j++) {
-				Button button = new Button(i + "," + j);
-				gridpane.add(button, i, j);
-				button.setBackground(new Background(new BackgroundFill(utility.tileColor(), null, null)));
-				button.setOnAction(new EventHandler<ActionEvent>() {
-					// right now it just turns the button blue. Maybe have a field that is an array
-					// of color and have the button cycle through colors?
-					public void handle(ActionEvent e) {
-						System.out.println("You clicked button:");
-					}
-				});
 
+				// creating the button
+				Button button = new Button(" ");
+
+				// adding the button in
+				gridpane.add(button, i, j);
+
+				// setting the button specs
+				button.setBackground(new Background(
+						new BackgroundFill(utility.tileColor(numColors()), new CornerRadii(7.0), utility.inset())));
+
+			//	buttons[i][j] = button;
 			}
 		}
-
+//		Listener listen = new Listener(buttons);
+//		listen.listen();
+		return gridpane;
 	}
 
 	/**
@@ -83,18 +95,16 @@ public class Board extends Application {
 	}
 
 	/**
-	 * Launch the GUI application
-	 * 
-	 * @param args the command line arguments, currently ignored
+	 * getting the number of colors
 	 */
-	public static void main(String[] args) {
-		String inputRow = args[0];
-		String inputColumn = args[1];
-		Board board = new Board();
-		board.setRow(Integer.valueOf(inputRow));
-		board.setColumn(Integer.parseInt(inputColumn));
-		Application.launch(args);
-
+	public int numColors() {
+		return colors;
 	}
 
+	/**
+	 * retrieving the array of buttons
+	 */
+//	public Button[][] getButtons() {
+//		return buttons;
+//	}
 }
