@@ -33,7 +33,6 @@ public class Game {
 
 	/**
 	 * Checks if we made a valid move of a tile
-	 * 
 	 * @param move
 	 * @return
 	 */
@@ -43,21 +42,32 @@ public class Game {
 		int y = move.getFromColumn();
 		int x1 = move.getToRow();
 		int y1 = move.getToColumn();
-		if (x == x1 && (y + 1 == y1 || y - 1 == y1)) {
-			return true;
-		}
-		if (y == y1 && (x + 1 == x1 || x - 1 == x1)) {
-			return true;
+		if (!hasStar[x][y] && !hasStar[x1][y1]) {
+			if (x == x1 && (y + 1 == y1 || y - 1 == y1)) {
+				return true;
+			}
+			if (y == y1 && (x + 1 == x1 || x - 1 == x1)) {
+				return true;
+			}
 		}
 		System.out.println("Illegal Move");
 		return false;
 	}
 
-	// set of getters and setters
-	public Move handleMove(Move move) {
-		return move;
+	/**
+	 * We handle the moves with checking the board and also making the moves
+	 * @param move the tile row and column of the piece being moved and moved to where
+	 */
+	public void handleMove(Move move) {
+		int temp = jewelType[move.getFromRow()][move.getFromColumn()];
+		jewelType[move.getFromRow()][move.getFromColumn()] = jewelType[move.getToRow()][move.getToColumn()];
+		jewelType[move.getToRow()][move.getToColumn()] = temp;
+		boardCheck(move.getToRow(), move.getToColumn());
+		boardCheck(move.getFromRow(), move.getFromColumn());
 	}
-
+	
+	
+	// set of getters and setters
 	public void setColumns(int columns) {
 		this.columns = columns;
 	}
@@ -91,25 +101,49 @@ public class Game {
 	}
 
 	/**
-	 * Checks for if there are tiles in lines of the same type
+	 * Checks for if there are tiles in lines of the same type after a certain move
+	 * 
+	 * @param row    the row of the moved tile
+	 * @param column the column of the moved tile
 	 */
-	public void boardCheck() {
-		int count = 0; // counts how many tiles in a row
-		int compareRow = 0;
-		for (int i = 0; i < getRows(); i++) {
-			for (int j = 0; j < getColumns(); j++) {
-				compareRow = jewelType[i][j];
-				if (j - 1 > getColumns()) {
-					if (compareRow == jewelType[i][j - 1]) {
-						count++;
-						if (count > 2) {
-							for (; count > 0; count--) {
-								hasStar[i][j] = true;
-								hasStar[i][j - 1] = true;
-							}
-						}
-					}
-				}
+	public void boardCheck(int row, int column) {
+		int type = jewelType[row][column];
+		int right = 0;
+		int left = 0;
+		int top = 0;
+		int bottom = 0;
+		// first check that its not at the edge of the board
+		// for loop forwards then with count for loop backwards
+
+		// to the bottom check
+		for (int j = column; j < getColumns() && type == jewelType[row][j]; j++) {
+			bottom = j;
+		}
+
+		// to the top check
+		for (int j = column; j >= 0 && type == jewelType[row][j]; j--) {
+			top = j;
+		}
+
+		// to the right check
+		for (int j = row; j < getRows() && type == jewelType[j][column]; j++) {
+			right = j;
+		}
+
+		// to the left check
+		for (int j = row; j >= 0 && type == jewelType[j][column]; j--) {
+			left = j;
+		}
+
+		// setting the game right for the horizontal
+		if (right - left > 1) {
+			for (int j = left; j < right + 1; j++) {
+				hasStar[j][column] = true;
+			}
+		}
+		if (bottom - top > 1) {
+			for (int j = top; j < bottom + 1; j++) {
+				hasStar[row][j] = true;
 			}
 		}
 	}

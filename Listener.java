@@ -8,7 +8,6 @@ import javafx.scene.effect.DropShadow;
  *
  */
 public class Listener {
-	private Button[][] buttons;
 
 	// boolean
 	private boolean firstClick = true;
@@ -16,18 +15,17 @@ public class Listener {
 	// original button clicked
 	private TileButton tileOne = null;
 
-	Game game = new Game(10, 8, 4);
-	Board board = new Board(10, 8, 4);
+	public Listener() {
 
-	public Listener(Button[][] buttons) {
-		this.buttons = buttons;
 	}
 
-	public void listen() {
+	public void listen(Board board) {
+		Game game = board.getGame();
+		Button[][] buttons = board.getButtons();
 		DropShadow shadow = new DropShadow();
 
-		for (int i = 0; i < buttons.length; i++) {
-			for (int j = 0; j < buttons[i].length; j++) {
+		for (int i = 0; i < board.getRow(); i++) {
+			for (int j = 0; j < board.getColumn(); j++) {
 
 				buttons[i][j].setOnAction(new EventHandler<ActionEvent>() {
 
@@ -51,6 +49,7 @@ public class Listener {
 
 							if (game.isValidMove(move)) {
 								game.handleMove(move);
+
 							}
 							firstClick = true;
 							tileOne.setEffect(null);
