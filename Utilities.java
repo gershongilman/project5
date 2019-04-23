@@ -15,19 +15,19 @@ public class Utilities {
 		case 3:
 			return Color.ORANGE.brighter();
 		case 4:
-			return Color.WHITE;
+			return Color.WHITE.brighter();
 		case 5:
-			return Color.GRAY;
+			return Color.GRAY.brighter();
 		case 6:
-			return Color.RED;
+			return Color.RED.brighter();
 		case 7:
-			return Color.BROWN;
+			return Color.BROWN.brighter();
 		case 8:
-			return Color.YELLOW;
+			return Color.YELLOW.brighter();
 		case 9:
-			return Color.SALMON;
+			return Color.SALMON.brighter();
 		case 10:
-			return Color.PURPLE;
+			return Color.PURPLE.brighter();
 
 		}
 		return Color.BLACK;

@@ -55,8 +55,6 @@ public class Listener {
 							tileOne.setEffect(null);
 							board.updateBoard();
 						}
-
-						System.out.println("You clicked button:" + b1.getRow() + " " + b1.getColumn());
 					}
 				});
 			}

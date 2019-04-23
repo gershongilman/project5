@@ -1,7 +1,10 @@
+import java.awt.Insets;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -47,8 +50,11 @@ public class Jewels extends Application {
 		// initializing our board
 		Board board = new Board(rows, columns, colors);
 
-		// showing the board
+
 		Scene scene = new Scene(board.show(), 500, 500);
+
+		// showing the board
+
 		primaryStage.setScene(scene);
 
 		// user sees

@@ -44,14 +44,14 @@ public class Game {
 		int y = move.getFromColumn();
 		int x1 = move.getToRow();
 		int y1 = move.getToColumn();
-		if (!hasStar[x][y] && !hasStar[x1][y1]) {
-			if (x == x1 && (y + 1 == y1 || y - 1 == y1)) {
-				return true;
-			}
-			if (y == y1 && (x + 1 == x1 || x - 1 == x1)) {
-				return true;
-			}
+
+		if (x == x1 && (y + 1 == y1 || y - 1 == y1)) {
+			return true;
 		}
+		if (y == y1 && (x + 1 == x1 || x - 1 == x1)) {
+			return true;
+		}
+
 		System.out.println("Illegal Move");
 		return false;
 	}
@@ -70,7 +70,7 @@ public class Game {
 		boardCheck(move.getFromRow(), move.getFromColumn());
 		moveCounter++;
 		if (gameFinished()) {
-			System.out.print("YOU WIN!!" + "it took" + getMoveCounter());
+			System.out.print("YOU WIN!!" + "it took" + " " + getMoveCounter());
 		}
 	}
 
@@ -150,12 +150,30 @@ public class Game {
 		if (right - left > 1) {
 			for (int j = left; j < right + 1; j++) {
 				hasStar[j][column] = true;
+				drop(j, column);
 			}
 		}
+
+		// setting game up vertically
 		if (bottom - top > 1) {
 			for (int j = top; j < bottom + 1; j++) {
 				hasStar[row][j] = true;
+				drop(row, j);
 			}
+		}
+	}
+
+	public void drop(int row, int column) {
+
+		// drop horizontally
+		for (int j = column; j >= 0; j--) {
+			jewelType[row][j] = jewelType[(row - 1) >= 0 ? row - 1 : getNumber()][j];
+		}
+
+		// vertically
+		for (int j = column; j >= 0; j--) {
+
+			jewelType[j][column] = jewelType[j][(column - 1) >= 0 ? column - 1 : getNumber()];
 		}
 	}
 
