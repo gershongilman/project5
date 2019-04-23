@@ -8,24 +8,11 @@ public class Move {
 	private int tileToRow;
 	private int tileToColumn;
 
-	// fix constructor
 	public Move(int tileFromRow, int tileFromColumn, int tileToRow, int tileToColumn) {
 		this.tileFromRow = tileFromRow;
 		this.tileToRow = tileToRow;
 		this.tileFromColumn = tileFromColumn;
 		this.tileToColumn = tileToColumn;
-	}
-
-	/**
-	 * Moving the tiles no matter what
-	 */
-	public void move() {
-		int tempRow = getFromRow();
-		int tempColumn = getFromColumn();
-		setRowTo(getFromRow());
-		setColumnTo(getFromColumn());
-		setRowFrom(tempRow);
-		setColumnFrom(tempColumn);
 	}
 
 	public void setColumnFrom(int columnFrom) {

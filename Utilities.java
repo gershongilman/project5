@@ -9,11 +9,11 @@ public class Utilities {
 		switch (num) {
 
 		case 1:
-			return Color.BLUE;
+			return Color.BLUE.brighter();
 		case 2:
-			return Color.GREEN;
+			return Color.GREEN.brighter();
 		case 3:
-			return Color.ORANGE;
+			return Color.ORANGE.brighter();
 		case 4:
 			return Color.WHITE;
 		case 5:
@@ -38,6 +38,6 @@ public class Utilities {
 	 * sets the inset of the buttons
 	 */
 	public Insets inset() {
-		return new Insets(3, 3, 3, 3);
+		return new Insets(3, 5, 5, 3);
 	}
 }

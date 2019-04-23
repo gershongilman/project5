@@ -56,18 +56,9 @@ public class Board {
 	public void initialBoard() {
 		for (int i = 0; i < getRow(); i++) {
 			for (int j = 0; j < getColumn(); j++) {
-
 				// creating the button
 				TileButton button = new TileButton(i, j);
-				// button.setText(((game.getStar(i, j)) ? "*" : " "));
-				// adding the button in
 				current.add(button, i, j);
-
-				// setting the button specs
-				// button.setBackground(new Background(new
-				// BackgroundFill(utility.tileColor(game.getJewelType(i, j)),
-				// new CornerRadii(7.0), utility.inset())));
-
 				buttons[i][j] = button;
 			}
 

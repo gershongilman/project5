@@ -23,25 +23,27 @@ public class Jewels extends Application {
 		// reading the input parameters
 		Parameters params = getParameters();
 		List<String> list = params.getRaw();
+		if (!list.isEmpty()) {
+			// assigning the number of rows
+			int tempRow = (Integer.valueOf(list.get(0)) != null) ? Integer.valueOf(list.get(0)) : 0;
+			if (tempRow > 10) {
+				rows = tempRow;
+			}
 
-		// assigning the number of rows
-		int tempRow = (Integer.valueOf(list.get(0)) != null) ? Integer.valueOf(list.get(0)) : 0;
-		if (tempRow > 10) {
-			rows = tempRow;
+			// assinging the number of columns
+			int tempColumn = (Integer.valueOf(list.get(1)) != null) ? Integer.valueOf(list.get(1)) : 0;
+			if (tempColumn > 10) {
+				columns = tempColumn;
+			}
+
+			// assinging the number of columns
+			int tempColors = (Integer.valueOf(list.get(2)) != null) ? Integer.valueOf(list.get(2)) : 0;
+			if (tempColors > 4) {
+				colors = tempColors;
+			}
 		}
 
-		// assinging the number of columns
-		int tempColumn = (Integer.valueOf(list.get(1)) != null) ? Integer.valueOf(list.get(1)) : 0;
-		if (tempColumn > 10) {
-			columns = tempColumn;
-		}
-
-		// assinging the number of columns
-		int tempColors = (Integer.valueOf(list.get(2)) != null) ? Integer.valueOf(list.get(2)) : 0;
-		if (tempColors > 4) {
-			colors = tempColors;
-		}
-
+		// set alignment gridpane
 		// initializing our board
 		Board board = new Board(rows, columns, colors);
 
@@ -60,6 +62,7 @@ public class Jewels extends Application {
 	 */
 	public static void main(String[] args) {
 		try {
+
 			Application.launch(args);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());

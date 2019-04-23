@@ -4,6 +4,7 @@ public class Game {
 	boolean[][] hasStar;
 	int rows = 8;
 	int columns = 10;
+	int moveCounter = 0;
 
 	// num of colors in reality
 	int jewelNum = 4;
@@ -33,10 +34,11 @@ public class Game {
 
 	/**
 	 * Checks if we made a valid move of a tile
+	 * 
 	 * @param move
 	 * @return
 	 */
-	// take arguements move, goes into game class
+	// take arguments move, goes into game class
 	public boolean isValidMove(Move move) {
 		int x = move.getFromRow();
 		int y = move.getFromColumn();
@@ -56,7 +58,9 @@ public class Game {
 
 	/**
 	 * We handle the moves with checking the board and also making the moves
-	 * @param move the tile row and column of the piece being moved and moved to where
+	 * 
+	 * @param move the tile row and column of the piece being moved and moved to
+	 *             where
 	 */
 	public void handleMove(Move move) {
 		int temp = jewelType[move.getFromRow()][move.getFromColumn()];
@@ -64,9 +68,12 @@ public class Game {
 		jewelType[move.getToRow()][move.getToColumn()] = temp;
 		boardCheck(move.getToRow(), move.getToColumn());
 		boardCheck(move.getFromRow(), move.getFromColumn());
+		moveCounter++;
+		if (gameFinished()) {
+			System.out.print("YOU WIN!!" + "it took" + getMoveCounter());
+		}
 	}
-	
-	
+
 	// set of getters and setters
 	public void setColumns(int columns) {
 		this.columns = columns;
@@ -82,6 +89,10 @@ public class Game {
 
 	public int getRows() {
 		return rows;
+	}
+
+	public int getMoveCounter() {
+		return moveCounter;
 	}
 
 	public int getJewelType(int row, int column) {
@@ -146,5 +157,21 @@ public class Game {
 				hasStar[row][j] = true;
 			}
 		}
+	}
+
+	/**
+	 * checking if the game should be terminated
+	 * 
+	 * @return
+	 */
+	public boolean gameFinished() {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				if (hasStar[i][j] == false) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
