@@ -44,15 +44,31 @@ public class Game {
 		int y = move.getFromColumn();
 		int x1 = move.getToRow();
 		int y1 = move.getToColumn();
-		if (!hasStar[x][y] && !hasStar[x1][y1]) {
-			if (x == x1 && (y + 1 == y1 || y - 1 == y1)) {
+
+		if (x == x1 && (y + 1 == y1 || y - 1 == y1)) {
+			int temp = jewelType[x][y];
+			jewelType[x][y] = jewelType[x1][y1];
+			jewelType[x1][y1] = temp;
+			if (boardCheck(x, y) || boardCheck(x1, y1)) {
 				return true;
 			}
-			if (y == y1 && (x + 1 == x1 || x - 1 == x1)) {
+			jewelType[x1][y1] = jewelType[x][y];
+			jewelType[x][y] = temp;
+			return false;
+		}
+		if (y == y1 && (x + 1 == x1 || x - 1 == x1)) {
+			int temp = jewelType[x][y];
+			jewelType[x][y] = jewelType[x1][y1];
+			jewelType[x1][y1] = temp;
+			if (boardCheck(x, y) || boardCheck(x1, y1)) {
 				return true;
 			}
+			jewelType[x1][y1] = jewelType[x][y];
+			jewelType[x][y] = temp;
+			return false;
 		}
 		System.out.println("Illegal Move");
+
 		return false;
 	}
 
@@ -66,23 +82,15 @@ public class Game {
 		int temp = jewelType[move.getFromRow()][move.getFromColumn()];
 		jewelType[move.getFromRow()][move.getFromColumn()] = jewelType[move.getToRow()][move.getToColumn()];
 		jewelType[move.getToRow()][move.getToColumn()] = temp;
-		boardCheck(move.getToRow(), move.getToColumn());
-		boardCheck(move.getFromRow(), move.getFromColumn());
+//		boardCheck(move.getToRow(), move.getToColumn());
+//		boardCheck(move.getFromRow(), move.getFromColumn());
 		moveCounter++;
-		if (gameFinished()) {
-			System.out.print("YOU WIN!!" + "it took" + getMoveCounter());
+		if (isGameFinished()) {
+			System.out.print("YOU WIN!!" + "it took" + " " + getMoveCounter());
 		}
 	}
 
 	// set of getters and setters
-	public void setColumns(int columns) {
-		this.columns = columns;
-	}
-
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-
 	public int getColumns() {
 		return columns;
 	}
@@ -117,7 +125,7 @@ public class Game {
 	 * @param row    the row of the moved tile
 	 * @param column the column of the moved tile
 	 */
-	public void boardCheck(int row, int column) {
+	public boolean boardCheck(int row, int column) {
 		int type = jewelType[row][column];
 		int right = 0;
 		int left = 0;
@@ -128,35 +136,53 @@ public class Game {
 
 		// to the bottom check
 		for (int j = column; j < getColumns() && type == jewelType[row][j]; j++) {
-			bottom = j;
+			right = j;
 		}
 
 		// to the top check
 		for (int j = column; j >= 0 && type == jewelType[row][j]; j--) {
-			top = j;
+			left = j;
 		}
 
 		// to the right check
 		for (int j = row; j < getRows() && type == jewelType[j][column]; j++) {
-			right = j;
+			bottom = j;
 		}
 
 		// to the left check
 		for (int j = row; j >= 0 && type == jewelType[j][column]; j--) {
-			left = j;
+			top = j;
 		}
 
 		// setting the game right for the horizontal
 		if (right - left > 1) {
 			for (int j = left; j < right + 1; j++) {
-				hasStar[j][column] = true;
+				hasStar[row][j] = true;
+				drop(row, j);
+
 			}
+			return true;
 		}
+
+		// setting game up vertically
 		if (bottom - top > 1) {
 			for (int j = top; j < bottom + 1; j++) {
-				hasStar[row][j] = true;
+				hasStar[j][column] = true;
+				drop(j, column);
 			}
+			return true;
 		}
+		return false;
+	}
+
+	public void drop(int row, int column) {
+
+		// drop horizontally
+		for (int j = row; j > 0; j--) {
+			jewelType[j][column] = jewelType[j - 1][column];
+		}
+
+		jewelType[0][column] = getNumber();
 	}
 
 	/**
@@ -164,7 +190,7 @@ public class Game {
 	 * 
 	 * @return
 	 */
-	public boolean gameFinished() {
+	public boolean isGameFinished() {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
 				if (hasStar[i][j] == false) {
