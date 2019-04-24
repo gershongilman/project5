@@ -1,13 +1,18 @@
-
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 
+/**
+ * @author gershon
+ * This class deals with color application and insets for the buttons
+ */
 public class Utilities {
 
 	// method that chooses color by randomly selected number
 	public Color tileColor(int num) {
+		
+		//we essentially get the number from the logic which is inputed and the color is returned
 		switch (num) {
-
+		
 		case 1:
 			return Color.BLUE.brighter();
 		case 2:

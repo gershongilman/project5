@@ -42,9 +42,13 @@ public class Listener {
 					 * Event handler that deals with the most important part of the graphics the button click
 					 */
 					public void handle(ActionEvent e) {
+						
+						// this tilebutton is just a button that we can also get the location of in an 2d array
 						TileButton b1 = (TileButton) e.getSource();
 
+						// the check of if its the first click
 						if (firstClick) {
+							
 							// showing the selection
 							b1.setEffect(shadow);
 							pressedButton(b1);
@@ -52,13 +56,18 @@ public class Listener {
 						}
 
 						else {
-
+							//the move instance allows us to create the instance of a move which will store to and from and 
+							//make it easy to recall if its a legal move and etc.
 							Move move = new Move(tileOne.getRow(), tileOne.getColumn(), b1.getRow(), b1.getColumn());
 
+							//checking if the move is valid or not
 							if (game.isValidMove(move)) {
+								
+								//if move is valid we will make the move and also do much more inside game logic
 								game.handleMove(move);
-
 							}
+							
+							//now we return to listening to first click and update the board
 							firstClick = true;
 							tileOne.setEffect(null);
 							board.updateBoard();
@@ -75,9 +84,5 @@ public class Listener {
 	 */
 	public void pressedButton(TileButton pressed) {
 		this.tileOne = pressed;
-	}
-
-	public TileButton getPressedButton(TileButton pressed) {
-		return tileOne;
 	}
 }
