@@ -14,7 +14,7 @@ public class Utilities {
 		switch (num) {
 		
 		case 1:
-			return Color.BLUE.brighter();
+			return Color.LIGHTBLUE.brighter();
 		case 2:
 			return Color.GREEN.brighter();
 		case 3:

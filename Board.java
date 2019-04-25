@@ -36,7 +36,6 @@ public class Board {
 
 	/**
 	 * This is our constructor that initializes everything.
-	 * 
 	 * @param row    the number of rows the user inputs
 	 * @param column the number of columns of the playing grid
 	 * @param colors the number of colors the user wants

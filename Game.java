@@ -158,7 +158,7 @@ public class Game {
 		}
 		//check if the game is won
 		if (isGameFinished()) {
-			System.out.print("YOU WIN!!" + "it took" + " " + getMoveCounter());
+			System.out.print("YOU WIN!!" + "it took" + " " + getMoveCounter() + "moves");
 		}
 	}
 
@@ -290,6 +290,16 @@ public class Game {
 	 */
 	public int getJewelType(int row, int column) {
 		return jewelType[row][column];
+	}
+	
+	/**
+	 * This setter was created for testing purposes and allows us to test swapping,etc
+	 * @param row given a specific row
+	 * @param column given a specific column
+	 * @param jewelType and a specific jewel, we will set a square to it
+	 */
+	public void setJewelType(int row, int column, int jewelType){
+		this.jewelType[row][column] = jewelType;
 	}
 
 	/**
