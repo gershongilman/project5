@@ -1,6 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -49,7 +49,8 @@ public class GameTest {
 
 	/**
 	 * Testing that we can see if a made move is valid in the sense that its
-	 * adjacent
+	 * adjacent we have a separate function that tests that the move is valid in the
+	 * sense the swap accomplishes something
 	 */
 	@Test
 	public void testIsValidMove() {
@@ -112,32 +113,103 @@ public class GameTest {
 	 */
 	@Test
 	public void testIsSwapValid() {
-//		Game game = new Game(4, 4, 0);
-//		for (int i = 0; i < 4; i++) {
-//			game.jewelType[0][i] = i + 1;
-//			System.out.print(game.jewelType[0][i]);
-//		}
-//		System.out.println();
-//		for (int i = 3; i > -1; i--) {
-//			game.jewelType[1][i] = i + 1;
-//			System.out.print(game.jewelType[1][i]);
-//		}
-//		System.out.println();
-//		for (int i = 3; i > -1; i--) {
-//			game.jewelType[2][i] = i + 1;
-//			System.out.print(game.jewelType[1][i]);
-//		}
-//		System.out.println();
-//		game.jewelType[3][0] = 1;
-//		game.jewelType[3][1] = 4;
-//		game.jewelType[3][2] = 2;
-//		game.jewelType[3][3] = 3;
+		Game game = new Game(4, 4, 0);
+		game.setJewelType(0, 0, 4);
+		game.setJewelType(0, 1, 2);
+		game.setJewelType(0, 2, 3);
+		game.setJewelType(0, 3, 4);
 
-		// vertical tests
-		// testing that we can do it from the top end
-//		 Move move = new Move(0,1,0,2);
-//		 handleMove(move);
-		// assertTrue(isSwapValid(,2));
+		game.setJewelType(1, 0, 4);
+		game.setJewelType(1, 1, 3);
+		game.setJewelType(1, 2, 2);
+		game.setJewelType(1, 3, 1);
+
+		game.setJewelType(2, 0, 4);
+		game.setJewelType(2, 1, 3);
+		game.setJewelType(2, 2, 2);
+		game.setJewelType(2, 3, 1);
+
+		game.setJewelType(3, 0, 1);
+		game.setJewelType(3, 1, 4);
+		game.setJewelType(3, 2, 4);
+		game.setJewelType(3, 3, 4);
+		// -------------------------------------------------\\
+		// Test 0:
+		// almost case, of three
+		Move move = new Move(1, 1, 2, 1);
+		assertFalse(game.isSwapValid(move));
+
+		move = new Move(1, 3, 1, 2);
+		assertFalse(game.isSwapValid(move));
+
+		// Horizontal and Vertical tests 1 (end completions only)
+		// testing that we can do it from the top end horizontally
+		move = new Move(0, 1, 0, 2);
+		assertTrue(game.isSwapValid(move));
+
+		// vertical up and down completion test 1
+		// end
+		move = new Move(0, 0, 1, 0);
+		assertTrue(game.isSwapValid(move));
+		// middle
+		move = new Move(2, 0, 1, 0);
+		assertTrue(game.isSwapValid(move));
+		// other end
+		move = new Move(1, 0, 2, 0);
+		assertTrue(game.isSwapValid(move));
+		// other way around
+		move = new Move(1, 0, 0, 0);
+		assertTrue(game.isSwapValid(move));
+
+		// long chain completion
+		move = new Move(3, 0, 3, 1);
+		assertTrue(game.isSwapValid(move));
+		// checking reverse that it doesn't matter which one you choose first
+		move = new Move(3, 1, 3, 0);
+		assertTrue(game.isSwapValid(move));
+
+		// -------------------------------------------------------------\\
+		// completions of the middle
+		game.setJewelType(0, 0, 4);
+		game.setJewelType(0, 1, 2);
+		game.setJewelType(0, 2, 3);
+		game.setJewelType(0, 3, 4);
+
+		game.setJewelType(1, 0, 2);
+		game.setJewelType(1, 1, 3);
+		game.setJewelType(1, 2, 2);
+		game.setJewelType(1, 3, 1);
+
+		game.setJewelType(2, 0, 2);
+		game.setJewelType(2, 1, 2);
+		game.setJewelType(2, 2, 1);
+		game.setJewelType(2, 3, 4);
+
+		game.setJewelType(3, 0, 3);
+		game.setJewelType(3, 1, 4);
+		game.setJewelType(3, 2, 3);
+		game.setJewelType(3, 3, 1);
+
+		// testing middle horizontal
+		move = new Move(2, 1, 1, 1);
+		assertTrue(game.isSwapValid(move));
+
+		// testing middle vertical
+		move = new Move(2, 2, 2, 3);
+		assertTrue(game.isSwapValid(move));
+
+	}
+
+	/**
+	 * Testing if reverse tile works nothing difficult
+	 */
+	public void testReverseTile() {
+		Game game = new Game(1, 2, 0);
+		game.setJewelType(0, 0, 3);
+		game.setJewelType(0, 1, 2);
+		game.reverseTile(0, 0, 0, 1);
+		assertEquals(3, game.getJewelType(0, 1));
+		assertEquals(2, game.getJewelType(0, 0));
 	}
 
 	/**
@@ -145,21 +217,109 @@ public class GameTest {
 	 */
 	@Test
 	public void testHandleMove() {
-//		Game game = new Game(3, 3, 0);
-//		game.setJewelType(0, 0, 4);
-//		game.setJewelType(0, 1, 2);
-//		game.setJewelType(0, 2, 3);
-//		game.setJewelType(1, 0, 4);
-//		game.setJewelType(1, 1, 3);
-//		game.setJewelType(1, 2, 2);
-//		game.setJewelType(2, 0, 4);
-//		game.setJewelType(2, 1, 3);
-//		game.setJewelType(2, 2, 2);
-//
-//		Move move = new Move(0, 1, 0, 2);
-//		game.handleMove(move);
-//		assertFalse(game.getJewelType(0, 2) != 2);
-//		// assertEquals(1, game.getJewelType(1, 0));
+		Game game = new Game(4, 4, 0);
+		game.setJewelType(0, 0, 1);
+		game.setJewelType(0, 1, 2);
+		game.setJewelType(0, 2, 3);
+		game.setJewelType(0, 3, 1);
+
+		game.setJewelType(1, 0, 2);
+		game.setJewelType(1, 1, 1);
+		game.setJewelType(1, 2, 2);
+		game.setJewelType(1, 3, 4);
+
+		game.setJewelType(2, 0, 3);
+		game.setJewelType(2, 1, 2);
+		game.setJewelType(2, 2, 1);
+		game.setJewelType(2, 3, 4);
+
+		game.setJewelType(3, 0, 2);
+		game.setJewelType(3, 1, 3);
+		game.setJewelType(3, 2, 4);
+		game.setJewelType(3, 3, 2);
+
+		// horizontal move side to side and it being marked
+		Move move = new Move(3, 2, 3, 3);
+		game.handleMove(move);
+		assertEquals(1, game.getJewelType(3, 3));
+		assertEquals(2, game.getJewelType(3, 2));
+		assertEquals(1, game.getJewelType(2, 2));
+		assertTrue(game.getStar(3, 3));
+		assertTrue(game.getStar(2, 3));
+		assertTrue(game.getStar(1, 3));
+		assertFalse(game.getStar(3, 2));
+		assertFalse(game.getStar(2, 2));
+
+		// testing the vertical move up (doing up and down although a good test is
+		// repetitive, because having tested the other involved classes does it
+		// implicitly
+		game.setJewelType(0, 0, 1);
+		game.setJewelType(0, 1, 2);
+		game.setJewelType(0, 2, 3);
+		game.setJewelType(0, 3, 1);
+
+		game.setJewelType(1, 0, 2);
+		game.setJewelType(1, 1, 1);
+		game.setJewelType(1, 2, 2);
+		game.setJewelType(1, 3, 4);
+
+		game.setJewelType(2, 0, 3);
+		game.setJewelType(2, 1, 2);
+		game.setJewelType(2, 2, 1);
+		game.setJewelType(2, 3, 4);
+
+		game.setJewelType(3, 0, 2);
+		game.setJewelType(3, 1, 3);
+		game.setJewelType(3, 2, 4);
+		game.setJewelType(3, 3, 2);
+
+		// here is the test, for somereason junit was going crazy if I didn't reset the
+		// board
+		Move move1 = new Move(2, 1, 1, 1);
+		game.handleMove(move1);
+		assertEquals(2, game.getJewelType(1, 1));
+		assertEquals(1, game.getJewelType(2, 1));
+		assertEquals(1, game.getJewelType(1, 0));
+		assertEquals(3, game.getJewelType(1, 2));
+		assertTrue(game.getStar(1, 1));
+		assertTrue(game.getStar(1, 0));
+		assertTrue(game.getStar(1, 2));
+		assertFalse(game.getStar(2, 1));
+		assertFalse(game.getStar(0, 0));
+
+		// checking that the other ones are still marked
+		assertTrue(game.getStar(3, 3));
+		assertTrue(game.getStar(2, 3));
+		assertTrue(game.getStar(1, 3));
+
+		// ----------------------------------------------
+		// testing the win
+		Game game2 = new Game(3, 3, 0);
+		game2.setJewelType(0, 0, 1);
+		game2.setJewelType(0, 1, 1);
+		game2.setJewelType(0, 2, 1);
+
+		game2.setJewelType(1, 0, 1);
+		game2.setJewelType(1, 1, 1);
+		game2.setJewelType(1, 2, 1);
+
+		game2.setJewelType(2, 0, 1);
+		game2.setJewelType(2, 1, 1);
+		game2.setJewelType(2, 2, 2);
+		game2.setStar(0, 0, true);
+		game2.setStar(0, 1, true);
+		game2.setStar(0, 2, true);
+		game2.setStar(1, 0, true);
+		game2.setStar(1, 1, true);
+		game2.setStar(1, 2, true);
+		game2.setStar(2, 0, true);
+		game2.setStar(2, 1, true);
+
+		move = new Move(2, 2, 2, 1);
+		game2.handleMove(move);
+		// look at the console
+		assertEquals(1, game2.getMoveCounter());
+
 	}
 
 	/**
@@ -469,35 +629,5 @@ public class GameTest {
 		// testing the horizontal component drop is the same as the vertical so I will
 		// not test
 	}
-//
-//	@Test
-//	void testIsGameFinished() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetColumns() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetRows() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetMoveCounter() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetJewelType() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetStar() {
-//		fail("Not yet implemented");
-//	}
 
 }

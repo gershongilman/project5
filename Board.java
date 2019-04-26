@@ -58,6 +58,7 @@ public class Board {
 	/**
 	 * Setting up the board. this is the general tying in of all the graphics of the
 	 * game
+	 * @return a grid pane of the board is shown
 	 */
 	public GridPane show() {
 
@@ -105,7 +106,7 @@ public class Board {
 
 	/**
 	 * We update the board with color and we use this so that we can add in the
-	 * stars into the board and have this seperate from logic and GUI based.
+	 * stars into the board and have this separate from logic and GUI based.
 	 */
 	public void updateBoard() {
 		for (int i = 0; i < getRow(); i++) {
@@ -121,7 +122,6 @@ public class Board {
 				button.setBackground(new Background(new BackgroundFill(utility.tileColor(game.getJewelType(i, j)),
 						new CornerRadii(7.0), utility.inset())));
 			}
-
 		}
 	}
 
@@ -183,6 +183,7 @@ public class Board {
 
 	/**
 	 * setting the current pane
+	 * @param current the pane that we are dealing with
 	 */
 	public void setCurrentPane(GridPane current) {
 		this.current = current;

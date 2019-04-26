@@ -61,10 +61,12 @@ public class Listener {
 							Move move = new Move(tileOne.getRow(), tileOne.getColumn(), b1.getRow(), b1.getColumn());
 
 							//checking if the move is valid or not
-							if (game.isValidMove(move)) {
+							if (game.isValidMove(move) &&  game.isSwapValid(move)) {
+							
 								
 								//if move is valid we will make the move and also do much more inside game logic
 								game.handleMove(move);
+							
 							}
 							
 							//now we return to listening to first click and update the board
@@ -81,6 +83,7 @@ public class Listener {
 
 	/**
 	 * storing the pressed button
+	 * @param pressed the tilebutton that is currently pressed.
 	 */
 	public void pressedButton(TileButton pressed) {
 		this.tileOne = pressed;
